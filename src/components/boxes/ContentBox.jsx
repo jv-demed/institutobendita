@@ -1,5 +1,7 @@
 import { palette } from '@/assets/palette';
+import { screens } from '@/assets/screens';
 import styled from 'styled-components';
+import { ActionButton } from '../buttons/ActionButton';
 
 const Styled = styled.div`
     border-radius: 5px;
@@ -16,26 +18,35 @@ const Styled = styled.div`
         display: flex;
         flex-direction: column;
         gap: 5px;
-        width: 80%;
+        width: 100%;
         .actions{
             display: flex;
             flex-direction: column;
+            gap: 5px;
         }
+    }
+    @media(max-width: ${screens.mobile.px}){
+        width: 100%;
     }
 `
 
-export function ContentBox({ title, description }){
+export function ContentBox({ img, title, subtitle, description, actions }){
     return(
         <Styled>
-            <img src='#' />
+            {img && <img src={img} />}
             <div className='infos'>
                 <h3>{title}</h3>
+                <span><b>{subtitle}</b></span>
                 <span>{description}</span>
-                <div className='actions'>
-                    <button>
-                        Ação
-                    </button>
-                </div>
+                {actions && <div className='actions'>
+                    {actions.map(action => {
+                        return(
+                            <ActionButton 
+                                name={action.name}
+                            />
+                        )
+                    })}
+                </div>}
             </div>
         </Styled>
     );
